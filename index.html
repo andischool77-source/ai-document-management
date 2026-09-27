@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI DOCUMENT MANAGEMENT</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">📄</div>
+            <div>
+                <h2>AI DOCUMENT</h2>
+                <span>Management</span>
+            </div>
+        </div>
+
+        <nav class="menu">
+
+            <button class="menu-btn active" data-page="dashboard">
+                <span>🏠</span>
+                <span>Dashboard</span>
+            </button>
+
+            <button class="menu-btn" data-page="documents">
+                <span>📄</span>
+                <span>Dokumen</span>
+            </button>
+
+            <button class="menu-btn" data-page="ai">
+                <span>🤖</span>
+                <span>AI Assistant</span>
+            </button>
+
+            <button class="menu-btn" data-page="reminder">
+                <span>⏰</span>
+                <span>Pengingat</span>
+            </button>
+
+            <button class="menu-btn" data-page="backup">
+                <span>💾</span>
+                <span>Backup & Data</span>
+            </button>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="system-status">
+                <span class="status-dot"></span>
+                <span>Database Lokal Aktif</span>
+            </div>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div>
+                <h1 id="pageTitle">Dashboard</h1>
+                <p id="pageSubtitle">Pusat pengelolaan dokumen bisnis</p>
+            </div>
+
+            <button class="primary-btn" id="quickUploadBtn">
+                ＋ Upload Dokumen
+            </button>
+
+        </header>
+
+
+        <!-- DASHBOARD -->
+        <section class="page active" id="page-dashboard">
+
+            <div class="welcome-card">
+
+                <div>
+                    <span class="small-label">AI DOCUMENT MANAGEMENT</span>
+
+                    <h2>Kelola dokumen bisnis dengan lebih mudah.</h2>
+
+                    <p>
+                        Simpan, cari, analisis, dan kelola dokumen bisnis
+                        dari satu tempat.
+                    </p>
+
+                    <button class="primary-btn" id="welcomeUploadBtn">
+                        📄 Tambah Dokumen
+                    </button>
+                </div>
+
+                <div class="welcome-icon">
+                    🤖
+                </div>
+
+            </div>
+
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-icon blue">📄</div>
+                    <div>
+                        <span>Total Dokumen</span>
+                        <strong id="statTotal">0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon green">🧾</div>
+                    <div>
+                        <span>Invoice</span>
+                        <strong id="statInvoice">0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon purple">📋</div>
+                    <div>
+                        <span>Kontrak</span>
+                        <strong id="statContract">0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon orange">⏰</div>
+                    <div>
+                        <span>Pengingat</span>
+                        <strong id="statReminder">0</strong>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-grid">
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <h3>Dokumen Terbaru</h3>
+                            <p>Dokumen terakhir yang ditambahkan</p>
+                        </div>
+
+                        <button class="text-btn" id="viewAllBtn">
+                            Lihat Semua
+                        </button>
+                    </div>
+
+                    <div id="recentDocuments" class="document-list"></div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <h3>Pengingat Terdekat</h3>
+                            <p>Tanggal penting dokumen</p>
+                        </div>
+                    </div>
+
+                    <div id="dashboardReminders"></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DOCUMENTS -->
+        <section class="page" id="page-documents">
+
+            <div class="toolbar">
+
+                <div class="search-box">
+                    🔍
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Cari nama, kategori, isi dokumen..."
+                    >
+                </div>
+
+                <select id="categoryFilter">
+
+                    <option value="">Semua Kategori</option>
+                    <option value="Invoice">Invoice</option>
+                    <option value="Kontrak">Kontrak</option>
+                    <option value="Laporan">Laporan</option>
+                    <option value="Surat">Surat</option>
+                    <option value="Keuangan">Keuangan</option>
+                    <option value="Pelanggan">Pelanggan</option>
+                    <option value="Karyawan">Karyawan</option>
+                    <option value="Pembelian">Pembelian</option>
+                    <option value="Penjualan">Penjualan</option>
+                    <option value="Lainnya">Lainnya</option>
+
+                </select>
+
+                <select id="sortDocuments">
+
+                    <option value="newest">Terbaru</option>
+                    <option value="oldest">Terlama</option>
+                    <option value="name">Nama A-Z</option>
+                    <option value="name-desc">Nama Z-A</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3>Document Library</h3>
+                        <p id="documentCount">0 dokumen</p>
+                    </div>
+
+                    <button class="primary-btn" id="uploadDocumentBtn">
+                        ＋ Upload
+                    </button>
+
+                </div>
+
+                <div id="documentsContainer" class="documents-grid"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- AI -->
+        <section class="page" id="page-ai">
+
+            <div class="ai-layout">
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <h3>🤖 AI Document Assistant</h3>
+                            <p>Tanyakan informasi dari dokumen yang tersimpan</p>
+                        </div>
+                    </div>
+
+                    <div class="ai-select-wrapper">
+
+                        <label>Pilih dokumen</label>
+
+                        <select id="aiDocumentSelect">
+                            <option value="">Pilih dokumen...</option>
+                        </select>
+
+                    </div>
+
+                    <div class="quick-questions">
+
+                        <button data-question="Ringkas dokumen ini">
+                            Ringkas dokumen
+                        </button>
+
+                        <button data-question="Siapa pihak yang terlibat?">
+                            Siapa pihaknya?
+                        </button>
+
+                        <button data-question="Berapa nominal atau totalnya?">
+                            Cari nominal
+                        </button>
+
+                        <button data-question="Kapan tanggal pentingnya?">
+                            Cari tanggal
+                        </button>
+
+                    </div>
+
+                    <div id="chatMessages" class="chat-messages">
+
+                        <div class="chat-message ai-message">
+                            <div class="chat-avatar">🤖</div>
+                            <div>
+                                Pilih dokumen lalu ajukan pertanyaan.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="chat-input">
+
+                        <input
+                            type="text"
+                            id="aiQuestion"
+                            placeholder="Tanyakan sesuatu tentang dokumen..."
+                        >
+
+                        <button class="primary-btn" id="askAiBtn">
+                            Kirim
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <h3>Analisis Dokumen</h3>
+                            <p>Informasi yang terdeteksi</p>
+                        </div>
+                    </div>
+
+                    <div id="aiAnalysis" class="analysis-box">
+
+                        <div class="empty-state">
+                            <div>🤖</div>
+                            <p>Pilih dokumen untuk melihat analisis.</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- REMINDER -->
+        <section class="page" id="page-reminder">
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3>⏰ Pengingat Dokumen</h3>
+                        <p>Dokumen dengan tanggal penting</p>
+                    </div>
+
+                </div>
+
+                <div id="remindersContainer"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- BACKUP -->
+        <section class="page" id="page-backup">
+
+            <div class="backup-grid">
+
+                <div class="panel">
+
+                    <div class="backup-icon">💾</div>
+
+                    <h3>Backup Data</h3>
+
+                    <p>
+                        Simpan seluruh data dokumen dan metadata
+                        ke dalam file JSON.
+                    </p>
+
+                    <button class="primary-btn" id="backupBtn">
+                        Download Backup
+                    </button>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="backup-icon">♻️</div>
+
+                    <h3>Restore Data</h3>
+
+                    <p>
+                        Kembalikan data dari file backup JSON.
+                    </p>
+
+                    <button class="secondary-btn" id="restoreBtn">
+                        Pilih Backup
+                    </button>
+
+                    <input
+                        type="file"
+                        id="restoreInput"
+                        accept=".json"
+                        hidden
+                    >
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="backup-icon">📊</div>
+
+                    <h3>Export CSV</h3>
+
+                    <p>
+                        Export daftar dokumen ke format CSV.
+                    </p>
+
+                    <button class="secondary-btn" id="exportCsvBtn">
+                        Export CSV
+                    </button>
+
+                </div>
+
+
+                <div class="panel danger-panel">
+
+                    <div class="backup-icon">⚠️</div>
+
+                    <h3>Reset Data</h3>
+
+                    <p>
+                        Menghapus seluruh data dokumen dari database lokal.
+                    </p>
+
+                    <button class="danger-btn" id="resetBtn">
+                        Reset Semua Data
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- UPLOAD MODAL -->
+<div class="modal" id="uploadModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+                <h3>📄 Tambah Dokumen</h3>
+                <p>Simpan dokumen bisnis baru</p>
+            </div>
+
+            <button class="close-btn" data-close="uploadModal">×</button>
+
+        </div>
+
+
+        <form id="documentForm">
+
+            <div class="form-group">
+
+                <label>File Dokumen *</label>
+
+                <div class="file-drop" id="fileDrop">
+
+                    <div>📁</div>
+
+                    <strong>Pilih file</strong>
+
+                    <span>PDF, Word, Excel, gambar, TXT, dan lainnya</span>
+
+                    <input type="file" id="documentFile" required>
+
+                </div>
+
+                <div id="selectedFileName" class="selected-file"></div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>Nama Dokumen *</label>
+
+                    <input
+                        type="text"
+                        id="documentName"
+                        required
+                        placeholder="Contoh: Invoice PT ABC"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Kategori</label>
+
+                    <select id="documentCategory">
+
+                        <option value="Lainnya">Lainnya</option>
+                        <option value="Invoice">Invoice</option>
+                        <option value="Kontrak">Kontrak</option>
+                        <option value="Laporan">Laporan</option>
+                        <option value="Surat">Surat</option>
+                        <option value="Keuangan">Keuangan</option>
+                        <option value="Pelanggan">Pelanggan</option>
+                        <option value="Karyawan">Karyawan</option>
+                        <option value="Pembelian">Pembelian</option>
+                        <option value="Penjualan">Penjualan</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>Tanggal Dokumen</label>
+
+                    <input type="date" id="documentDate">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Tanggal Pengingat</label>
+
+                    <input type="date" id="documentReminder">
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Deskripsi</label>
+
+                <textarea
+                    id="documentDescription"
+                    rows="3"
+                    placeholder="Keterangan dokumen..."
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Isi Teks / Catatan AI</label>
+
+                <textarea
+                    id="documentText"
+                    rows="5"
+                    placeholder="Masukkan teks dokumen atau catatan yang ingin dianalisis AI..."
+                ></textarea>
+
+                <small>
+                    Teks ini digunakan untuk pencarian dan analisis dokumen.
+                </small>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="secondary-btn"
+                    data-close="uploadModal"
+                >
+                    Batal
+                </button>
+
+                <button type="submit" class="primary-btn">
+                    Simpan Dokumen
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- DETAIL MODAL -->
+<div class="modal" id="detailModal">
+
+    <div class="modal-content large-modal">
+
+        <div class="modal-header">
+
+            <div>
+                <h3 id="detailTitle">Detail Dokumen</h3>
+                <p id="detailSubtitle"></p>
+            </div>
+
+            <button class="close-btn" data-close="detailModal">×</button>
+
+        </div>
+
+        <div id="detailContent"></div>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+<div id="toastContainer"></div>
+
+
+<script src="database.js"></script>
+<script src="storage.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
